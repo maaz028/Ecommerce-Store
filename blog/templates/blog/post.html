@@ -1,0 +1,40 @@
+{% extends 'shop/index.html' %}
+{% block image %}
+
+{% endblock %}
+
+{% block blog %}
+  active
+{% endblock  %}
+
+{% block body %}
+
+<h1 style="text-align: center;">Create Post</h1>
+
+<form action="">
+
+    <div class="container my-1">
+        <label  for="exampleInputEmail5" class="form-label">Title</label>
+        <input name="name" type="text" class="form-control" id="exampleInputEmail5" placeholder="Title of Post" aria-describedby="emailHelp">     
+    </div>
+    <div class="container my-1">
+        <label  for="exampleInputEmail4" class="form-label">Heading 2</label>
+        <input name="heading1" type="text" class="form-control" id="exampleInputEmail4" placeholder="Enter Main heading" aria-describedby="emailHelp">     
+    </div>
+    <div class="container my-1">
+        <label  for="exampleInputEmail1" class="form-label">Content</label><br>
+       <textarea name="conten1" style="width: 100%; height:110px;" name="" id="exampleInputEmail1" cols="30" rows="10"></textarea>
+    </div>
+    <div class="container my-1">
+        <label  for="exampleInputEmail2" class="form-label">Heading 3</label>
+        <input name="heading2" type="text" class="form-control" id="exampleInputEmail2" placeholder="Enter Subheading" aria-describedby="emailHelp">     
+    </div>
+    <div class="container my-1">
+        <label  for="exampleInputEmail3" class="form-label">Content</label><br>
+       <textarea name="conten2" style="width: 100%; height:110px;" name="" id="exampleInputEmail3" cols="30" rows="10"></textarea>
+    </div>
+    <div style="text-align: center;margin-bottom: 50px;">
+        <button type="submit" class="btn btn-success">Submit Post</button>
+    </div>
+</form>
+{% endblock  %}

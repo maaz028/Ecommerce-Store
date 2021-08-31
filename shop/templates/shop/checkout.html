@@ -1,0 +1,129 @@
+{% extends 'shop/base.html' %}
+{% block image %}
+
+{% endblock %}
+{% block body %}
+<h2 style="text-align: center; margin-top :2px;font-family: 'Merriweather', serif;" >Step-1 - Review Your Cart Items</h2>
+
+<ul id="products" class="container">
+    
+   
+  </ul>
+<h2 style="text-align: center; margin-top :2px;font-family: 'Merriweather', serif;" >Step-2 - Provide Details</h2>
+
+<div style="display: flex; justify-content:center" >
+
+  <form method="POST" action="./order_func" style="width: 800px;" class="row g-3"> {% csrf_token %}
+    
+    <input style="display:hidden;" type="hidden" name="items" id="items" >
+    <input style="display:hidden;" type="hidden" name="total_price" id="total_price" >
+    <div  class="col-md-6">
+      <label for="inputEmail4" class="form-label">Name</label>
+      <input name="name" type="text" class="form-control" id="inputPassword4">
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label">Email</label>
+      <input name="email" type="email" class="form-control" id="inputPassword4">
+    </div>
+    <div class="col-12">
+      <label for="inputAddress" class="form-label">Address</label>
+      <input name="address" type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+    </div>
+    
+    <div class="col-md-6">
+      <label for="inputCity" class="form-label">City</label>
+      <input name="city" type="text" class="form-control" id="inputCity">
+    </div>
+    
+    <div class="col-md-4">
+      <label for="inputState" class="form-label">State</label>
+      <select name="state" id="inputState" class="form-select">
+        <option selected>Choose...</option>
+        <option>KPK</option>
+        <option>Balochistan</option> 
+      </div>
+      <div class="col-md-6">
+        <label for="inputPassword4" class="form-label">Password</label>
+        <
+          <option>Punjab</option>
+          <option>Sindh</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label for="inputZip" class="form-label">Zip</label>
+        <input name="zip" type="text" class="form-control" id="inputZip">
+      </div>
+      <div class="col-12">
+        
+      </div>
+      <div class="col-12">
+        <button style="margin-bottom: 25px;" type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  {% endblock %}
+  
+  {% block js %}
+<script>
+
+var sum = 0,price = 0;
+  console.log('working')
+  if (localStorage.getItem('cart') == null) {
+    var cart = {};
+    var total = 0;
+ 
+  }
+  else{
+    cart = JSON.parse(localStorage.getItem('cart'));
+    total = localStorage.getItem('total');
+    console.log(cart)
+  }
+  data = ''
+
+  if ($.isEmptyObject(cart))
+  {
+    document.getElementById('products').innerHTML = "<h5>Cart is empty</h5>"; 
+  }
+    else
+    {
+        
+        
+        for (var item in cart)
+        {   
+            if (cart[item][0]>0)
+            {
+
+                data =  data  +  "<li style='background-color:green;border:1px solid;  border-radius:10px; margin-top:2px; color:white;' class='list-group-item d-flex justify-content-between align-items-center'><strong>"+cart[item][1]+" ("+cart[item][2].slice(7,)+")</strong>  <span class='badge bg-primary rounded-pill'>"+cart[item][0]+"</span></li>"
+            }
+            sum = sum + cart[item][0]
+            price = price + (parseInt(cart[item][2].slice(11,)) * cart[item][0])
+          
+            }
+            data = data +  "<li style='background-color:green;border:1px solid;width:400px; margin: auto;margin-top: auto;background-color: red;margin-top: 4px; border-radius:10px; margin-top:2px; color:white;' class='list-group-item d-flex justify-content-between align-items-center'><strong>Total Items: "+sum+"</strong>  <span class='badge bg-primary rounded-pill'> Total Price: "+price+"</span></li>"
+          document.getElementById('products').innerHTML = data;
+      }
+      document.getElementById('cartvalue').innerText = sum;
+
+
+$('#items').val(JSON.stringify(cart));
+$('#total_price').val(JSON.stringify(price));
+
+{% if empty %}
+
+alert('Provide details first')
+document.location = '/shop/checkout'
+
+{% endif %}
+
+{% if thank %}
+
+alert('your order has been dispatched')
+localStorage.clear();
+document.location = '/shop'
+
+{% endif %}
+
+    </script>
+
+{% endblock %}

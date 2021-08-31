@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+  <title>Watch World</title>
+
+  <style>
+
+  </style>
+</head>
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body{
+    min-height: 100vh;
+  }
+.olamba:hover
+{
+  text-decoration: underline;
+}
+</style>
+
+<body>
+
+
+
+  
+  <section style="min-height: 100vh;" >
+
+    {% load static %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"> <img style="width: 29px;
+          filter: invert;
+          filter: invert(1005);" src="{% static 'shop/watch.svg' %}" alt=""> </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a id='ol' class="nav-link {% block store %} {% endblock %}" aria-current="page" href="/shop">Store</a>
+              </li>
+              
+            
+            <li class="nav-item">
+                <a id='ol' class="nav-link {% block home %} {% endblock %}" aria-current="page" href="/shop/store">Home</a>
+              </li>
+           
+            
+            
+            <li class="nav-item">
+              <a class="nav-link {% block track %} {% endblock %}" aria-current="page" href="/shop/tracker">Tracker</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% block blog %} {% endblock %}" aria-current="page" href="/blog">Blog</a>
+            </li>
+            
+    
+            <li class="nav-item">
+              <a class="nav-link {% block contact %} {% endblock %}" aria-current="page" href="/shop/contact_us">Contact Us</a>
+            </li>
+
+
+          </ul>
+
+          {% block cart %}
+            
+          <form action='./search_results' method='get' class="d-flex">
+            <input name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        
+        
+        <button id="popcart"  type="button" class="btn btn-danger mx-2 pop" data-bs-container="body"
+        data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="    " data-bs-html="true">
+        Cart <span id="cartvalue"  class="badge bg-secondary">0</span>
+    </button>
+    
+    {% endblock  %}
+    
+</div>
+      </div>
+    </nav>
+
+ {% block body %}
+   
+ {% endblock %}
+     
+  <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  </section>
+
+ </body>
+ <footer style="margin: auto;">
+    <div style="display: flex;  background-color: #201b1e;
+    height: 58px;
+    margin:auto;
+    color: white;
+    align-items: center;
+    text-align: center;
+    justify-content:center">
+      <span >&copy; 2021 MK Company, Inc</span>
+    </div>
+  </footer>
+
+
+
+
+  {% block js %}
+  <script>
+  
+  
+  
+    console.log('working')
+    if (localStorage.getItem('cart') == null) {
+      var cart = {};
+      var total = 0;
+   
+    }
+    else{
+      cart = JSON.parse(localStorage.getItem('cart'));
+      total = localStorage.getItem('total');
+      updateCart(cart);
+    }
+    document.getElementById('cartvalue').innerHTML = total
+    $('.divpr').on('click','button.cart',function() {
+  
+    
+      var idstr = this.id.toString();
+  
+      if (cart[idstr] != undefined) {
+        qty = cart[idstr][0] + 1 
+        name = document.getElementById('name'+idstr).innerText;
+        price = document.getElementById('price'+idstr).innerText;
+        cart[idstr] = [qty, name, price] 
+      }
+      else {
+  
+        qty =   1 
+        name = document.getElementById('name'+idstr).innerText;
+        price = document.getElementById('price'+idstr).innerText;
+        cart[idstr] = [qty,name,price];
+      }
+      console.log(cart)
+      updateCart(cart);
+    });
+  
+  
+    function updateCart(cart) {
+      for (var item in cart) {
+        console.log(',,,,,,,,,,,',item)
+  
+        try
+  {
+      if (document.getElementById('div'+item) != null)
+      {
+  
+        document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+      }
+  }
+  catch(err)
+  {
+    console.log(err.message);
+  }
+      }
+  
+  
+      var total = 0;
+      for (var j = 0; j < Object.values(cart).length; j++) {
+        total = total + Object.values(cart)[j][0]
+        console.log(total)
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem('total', total)
+      document.getElementById('cartvalue').innerHTML = total
+  
+      for (var item in cart)
+      {
+        if (document.getElementById('div' + item) != null)
+      {
+  
+        if (cart[item][0]==0)
+        {
+          document.getElementById('div'+item).innerHTML="<button id='"+ item+"' class='btn btn-primary cart'>Add to Cart</button>"
+        }
+      }
+      }
+      pop();
+      
+    
+    }
+  
+  
+    $('.divpr').on('click','button.minus', function()
+    {
+      id = this.id.slice(5,)
+    
+      if (cart[id]!=0)
+      {   
+        if (document.getElementById('div'+id) != null && document.getElementById('name'+id)!=null)
+        {
+        qty = cart[id][0] - 1;
+        name = document.getElementById('name'+id).innerText
+        price = document.getElementById('price'+id).innerText;
+        cart[id] = [qty,name, price] 
+        localStorage.setItem('cart',cart)
+        for (var j = 0; j < Object.values(cart).length; j++) {
+          total = total + Object.values(cart)[j][0];
+        }
+        localStorage.setItem('total', total)
+      }
+    }
+        
+      
+      
+     
+      updateCart(cart);
+      
+    });
+    $('.divpr').on('click','button.plus', function()
+    {
+      console.log('plusclicked');
+      id = this.id.slice(4,)
+      console.log(id)
+  
+      if (document.getElementById('div'+id) != null && document.getElementById('name'+id)!=null)
+      {
+      qty = cart[id][0] + 1;
+      name = document.getElementById('name'+id).innerText
+      price = document.getElementById('price'+id).innerText;
+      cart[id] = [qty,name, price] 
+      localStorage.setItem('cart',cart)
+      updateCart(cart);
+      }
+    });
+  
+    var popover = new bootstrap.Popover(document.querySelector('#popcart'), {
+      trigger: 'focus'
+     
+    })
+    pop();
+    function pop()
+    {
+      data = '';
+      data = data + "<h5>Items in cart</h5>"
+      var i = 1;
+      for (var j in cart)
+      {
+        if (document.getElementById('name' + j) != null)
+      {
+        if(cart[j][0]>0)
+        {
+          data = data + "<b>"+i+  ".</b>";
+  
+          data = data + document.getElementById('name'+j).innerText + "....Qty" + cart[j][0] + "<br>";
+          i = i+1;
+        }
+      }
+       
+      }
+      data = data + "<a class='btn btn-primary my-2'  href='/shop/checkout' role='button'>Checkout</a> <a class='btn btn-primary clearcart'   id='clearcart' >Clear Cart</a>"
+  
+      document.getElementById('popcart').setAttribute('data-bs-content', data);
+      
+    }
+  
+  
+  
+  
+   $('#clearcart').click(function()
+   {
+    localStorage.clear();
+  
+   }
+   
+  
+   )
+  
+  
+  </script>
+  {% endblock %}
+
+ </html>
+

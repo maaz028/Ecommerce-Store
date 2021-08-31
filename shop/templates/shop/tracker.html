@@ -1,0 +1,341 @@
+{% extends 'shop/base.html' %}
+
+{% block track %}active{% endblock  %}
+
+{% load static %}
+
+
+{% block image %}
+
+{% endblock %}
+
+{% block tracker %}
+
+<style>
+</style>
+
+<section style="min-height: 100vh;" class="main" >
+
+   
+    {% endblock %}
+    {% block body %}
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </symbol>
+        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </symbol>
+      </svg>
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+        <div>
+          Track your <strong>Order details</strong>  by Specifying the below details
+        </div>
+      </div>
+   
+    <div style="border: 2px;
+    height: 237px;
+    border-radius: 20px;
+    background-color: #000000;display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 81px;
+    "" class="container">
+
+        <form  action="./tracker" method="post"> {% csrf_token %}
+            <div style="width: 510px;
+            margin:auto;margin-top:1px; display:flex;justify-content:center;align-items:center" class="row g-3">
+            <div>
+                <input type="text" name="orderid" class="form-control" placeholder="Order ID" aria-label="First name">
+            </div>
+            <div >
+                <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Last name">
+            </div>
+        
+        <div style="text-align: center; margin-top: 10px;">
+            <button style="width: 175px;" type="submit" class="btn btn-success my-2">Track</button>
+        </div>
+    </div>
+
+    </form>
+    </div>
+
+    
+
+        {% for order_details in order_details %}
+        
+        
+            <table style="width: 700px;margin:auto;margin-top :50px; margin-bottom:50px;" class="table table-dark table-striped">
+                <thead>
+                   
+                </thead>
+        <tbody>
+            <tr>
+                
+                <td><strong>Order ID:</strong></td>
+                <td>{{order_details.order_id}}</td>
+            </tr>
+            <tr>
+                
+                <td><strong>Items:</strong></td>
+                <td>{{order_details.items}}</td>
+            </tr>
+            <tr>
+                
+                <td><strong>Total_Amount:</strong></td>
+                <td>{{order_details.total_price}}</td>
+            </tr>
+            <tr>
+                
+                <td><strong>Name:</strong></td>
+                <td>{{order_details.name}}</td>
+            </tr>
+            <tr>
+                
+                <td><strong>Email:</strong></td>
+                <td>{{order_details.email}}</td>
+            </tr>
+            <tr>
+                
+                <td><strong>Addres:</strong></td>
+                <td>{{order_details.address}}</td>
+            </tr>
+            <tr>
+                
+                <td><strong>City:</strong></td>
+                <td>{{order_details.city}}</td>
+            </tr>
+            <tr>
+                
+                <td><strong>Zip:</strong></td>
+                <td>{{order_details.zip}}</td>
+            </tr>
+            
+        </table>
+      
+        {% endfor %}
+      
+      <ul style="margin-bottom: 57px;" class="list-group">
+          <div >
+              {% for data in update %}
+              <li style='background-color:green;border:1px solid;  border-radius:10px; margin-top:2px; color:white;'
+              class="container d-flex justify-content-between align-items-center">
+              {{data.update_desc}}, Order ID({{data.order_id}})
+              <span class="badge bg-primary rounded-pill">{{data.timestamps}}</span>
+            </li>
+            {% endfor %}
+        </div>
+    </ul>
+
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</section>
+{% endblock %}
+
+{% block js %}
+
+<script>
+
+
+  
+    console.log('working')
+    if (localStorage.getItem('cart') == null) {
+      var cart = {};
+      var total = 0;
+   
+    }
+    else{
+      cart = JSON.parse(localStorage.getItem('cart'));
+      total = localStorage.getItem('total');
+      updateCart(cart);
+    }
+    document.getElementById('cartvalue').innerHTML = total
+    $('.divpr').on('click','button.cart',function() {
+  
+    
+      var idstr = this.id.toString();
+  
+      if (cart[idstr] != undefined) {
+        qty = cart[idstr][0] + 1 
+        name = document.getElementById('name'+idstr).innerText;
+        price = document.getElementById('price'+idstr).innerText;
+        cart[idstr] = [qty, name, price] 
+      }
+      else {
+  
+        qty =   1 
+        name = document.getElementById('name'+idstr).innerText;
+        price = document.getElementById('price'+idstr).innerText;
+        cart[idstr] = [qty,name,price];
+      }
+      console.log(cart)
+      updateCart(cart);
+    });
+  
+  
+    function updateCart(cart) {
+      for (var item in cart) {
+        console.log(',,,,,,,,,,,',item)
+  
+        try
+  {
+      if (document.getElementById('div'+item) != null)
+      {
+  
+        document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+      }
+  }
+  catch(err)
+  {
+    console.log(err.message);
+  }
+      }
+  
+  
+      var total = 0;
+      for (var j = 0; j < Object.values(cart).length; j++) {
+        total = total + Object.values(cart)[j][0]
+        console.log(total)
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem('total', total)
+      document.getElementById('cartvalue').innerHTML = total
+  
+      for (var item in cart)
+      {
+        if (document.getElementById('div' + item) != null)
+      {
+  
+        if (cart[item][0]==0)
+        {
+          document.getElementById('div'+item).innerHTML="<button id='"+ item+"' class='btn btn-primary cart'>Add to Cart</button>"
+        }
+      }
+      }
+      pop();
+      
+    
+    }
+  
+  
+    $('.divpr').on('click','button.minus', function()
+    {
+      id = this.id.slice(5,)
+    
+      if (cart[id]!=0)
+      {   
+        if (document.getElementById('div'+id) != null && document.getElementById('name'+id)!=null)
+        {
+        qty = cart[id][0] - 1;
+        name = document.getElementById('name'+id).innerText
+        price = document.getElementById('price'+id).innerText;
+        cart[id] = [qty,name, price] 
+        localStorage.setItem('cart',cart)
+        for (var j = 0; j < Object.values(cart).length; j++) {
+          total = total + Object.values(cart)[j][0];
+        }
+        localStorage.setItem('total', total)
+      }
+    }
+        
+      
+      
+     
+      updateCart(cart);
+      
+    });
+    $('.divpr').on('click','button.plus', function()
+    {
+      console.log('plusclicked');
+      id = this.id.slice(4,)
+      console.log(id)
+  
+      if (document.getElementById('div'+id) != null && document.getElementById('name'+id)!=null)
+      {
+      qty = cart[id][0] + 1;
+      name = document.getElementById('name'+id).innerText
+      price = document.getElementById('price'+id).innerText;
+      cart[id] = [qty,name, price] 
+      localStorage.setItem('cart',cart)
+      updateCart(cart);
+      }
+    });
+  
+    var popover = new bootstrap.Popover(document.querySelector('#popcart'), {
+      trigger: 'focus'
+     
+    })
+    pop();
+    function pop()
+    {
+      data = '';
+      data = data + "<h5>Items in cart</h5>"
+      var i = 1;
+      for (var j in cart)
+      {
+        if (document.getElementById('name' + j) != null)
+      {
+        if(cart[j][0]>0)
+        {
+          data = data + "<b>"+i+  ".</b>";
+  
+          data = data + document.getElementById('name'+j).innerText + "....Qty" + cart[j][0] + "<br>";
+          i = i+1;
+        }
+      }
+       
+      }
+      data = data + "<a class='btn btn-primary my-2'  href='/shop/checkout' role='button'>Checkout</a> <a class='btn btn-primary clearcart'   id='clearcart' >Clear Cart</a>"
+  
+      document.getElementById('popcart').setAttribute('data-bs-content', data);
+      
+    }
+  
+  
+  
+  
+   $('#clearcart').click(function()
+   {
+    localStorage.clear();
+  
+   }
+   
+  
+   )
+  
+
+
+
+
+    {% if order_not_found %}
+    
+    alert('Your Order ID {{id}} with email is not placed yet...... ')
+    document.location = '/shop/tracker'
+
+    {% endif %}
+
+    {% if missing_data %}
+    
+    alert('Plz Provide Order ID and email')
+    document.location = '/shop/tracker'
+
+    {% endif %}
+
+</script>
+
+{% endblock %}

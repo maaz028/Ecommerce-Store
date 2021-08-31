@@ -1,0 +1,148 @@
+{% extends "shop/base.html" %}
+  
+{% block store %}active{% endblock %}
+    
+    {% block body%}
+    {% load static %}
+  
+   
+    {% for products,range,slides,Counter, lengthp in allprods %}
+    <h1 style="margin: 5px; color:rgb(216, 208, 208); text-align: center; color:black">{{products.0.category}}</h1>
+    <div id="carouselExampleControls{{Counter}}" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div style="display:flex; justify-content:center" class="conta">
+            <div class="card" style="width: 18rem; margin:10px">
+              <img style=" height: 150px;
+              width: 150px;
+              margin: auto;
+              margin-top: 22px;" src="/media/{{products.0.image}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 id="namepr{{products.0.id}}" class="card-title name">{{products.0.prodcut_name}}</h5>
+                <p class="card-text">{{products.0.prodcut_description}}</p>
+                <h5 id="pricepr{{products.0.id}}" > <strong>Price: </strong>Rs. {{products.0.price}}</h5>
+                <span id='divpr{{products.0.id}}' class="divpr">
+                  <button id="pr{{products.0.id}}" class="btn btn-primary cart">Add to Cart</button>
+                 </span>
+                <a href="/shop/products/{{products.0.id}}" id="quick{{forloop.counter}}"
+                  class="btn btn-primary ">Quick View</a>
+                 
+              </div>
+            </div>
+            {% for j in products|slice:'1:3' %}
+            <div class="card" style="width: 18rem; margin:10px">
+              <img style=" height: 150px;
+              width: 150px;
+              margin: auto;
+              margin-top: 22px;" src="/media/{{j.image}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 id="namepr{{j.id}}" class="card-title name">{{j.prodcut_name}}e</h5>
+                <p class="card-text">{{j.prodcut_description}}</p>
+                <h5 id="pricepr{{j.id}}" > <strong>Price: </strong>Rs. {{j.price}}</h5>
+                <span id='divpr{{j.id}}' class="divpr">
+                  <button id="pr{{j.id}}" class="btn btn-primary cart">Add to Cart</button>
+                </span>
+                <a href="/shop/products/{{j.id}}" id="quick2{{forloop.counter}}" class="btn btn-primary ">Quick
+                  View</a>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
+
+
+        {% for i in range %}
+
+        <div class="carousel-item">
+          <div style="display: flex; justify-content:center" class="container">
+            {% for j in products|slice:"3:" %}
+
+
+
+
+
+            {% if forloop.counter < 4%} <div class="card" style="width: 18rem; margin:10px">
+              <img style=" height: 150px;
+              width: 150px;
+              margin: auto;
+              margin-top: 22px;" src="/media/{{j.image}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 id="namepr{{j.id}}" class="card-title name">{{j.prodcut_name}}</h5>
+                <p class="card-text">{{j.prodcut_description}}</p>
+                <h5 id="pricepr{{j.id}}" > <strong>Price: </strong>Rs. {{j.price}}</h5>
+                <span id='divpr{{j.id}}' class="divpr" >
+                  <button id="pr{{j.id}}" class="btn btn-primary cart">Add to Cart</button>
+                </span>
+                <a href="/shop/products/{{j.id}}" id="quick2{{forloop.counter}}" class="btn btn-primary ">Quick
+                  View</a>
+              </div>
+          </div>
+
+
+          {% endif %}
+
+
+
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+{% if lengthp > 3 %}
+
+    <button style="width: 50px;" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{Counter}}"
+      data-bs-slide="prev">
+      <span style="border: 2px solid;
+          border-color: rgb(255, 255, 255);
+          border-radius: 10px;
+          background-color: rgb(255, 17, 0);" class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button  style="width: 50px;" class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{Counter}}"
+      data-bs-slide="next">
+      <span style="border: 2px solid;
+          border-color: rgb(255, 255, 255);
+          border-radius: 10px;
+          background-color: rgb(255, 4, 4);" class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+
+    {% endif %}
+
+    </div>
+    <div>
+      <button style="display: block; margin:auto;width:266px;margin-bottom: 70px;" type="button" class="btn btn-info">View All</button>
+    </div>
+    
+
+    {% endfor %}
+
+
+  
+
+
+  {% endblock %}
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+
